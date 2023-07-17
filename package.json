@@ -1,0 +1,30 @@
+{
+  "name": "mongodbcrud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js --exec babel-node",
+    "build": "babel src -d dist && ncp src/Views dist/Views && ncp src/public dist/public"
+  },
+  "keywords": [],
+  "author": "sebastian",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.21.5",
+    "@babel/core": "^7.22.1",
+    "@babel/node": "^7.22.1",
+    "@babel/plugin-transform-runtime": "^7.22.9",
+    "@babel/preset-env": "^7.22.4",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.0.7",
+    "mongoose": "^7.2.2",
+    "morgan": "^1.10.0",
+    "ncp": "^2.0.0",
+    "nodemon": "^2.0.22"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.0",
+    "dotenv": "^16.3.1"
+  }
+}
