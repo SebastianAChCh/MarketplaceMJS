@@ -17,6 +17,6 @@ router.get('/getUser/:email', getUser);
 
 router.patch('/editUser', editUser);
 
-router.delete('/deleteUser/:email', deleteUser);
+router.delete('/deleteUser', deleteUser);
 
 export default router;

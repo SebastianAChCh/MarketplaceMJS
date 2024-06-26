@@ -5,7 +5,7 @@ export const getHistories = async (req, res) => {
     const response = await History.find({});
     return res.json({
       status: 200,
-      data: response,
+      data: response.length > 0 ? response : 'there are not values yet',
     });
   } catch (error) {
     return res.json({
@@ -18,7 +18,7 @@ export const getHistories = async (req, res) => {
 const getHistoryMethod = async (email) => {
   try {
     const response = await History.find({ email });
-
+    console.log(response);
     return response;
   } catch (error) {
     throw new Error(error);
@@ -47,7 +47,7 @@ export const addPurchase = async (req, res) => {
   let alreadyExist = false;
   try {
     const response = await getHistoryMethod(email);
-    alreadyExist = !!response;
+    alreadyExist = response.length > 0;
   } catch (error) {
     return res.json({
       status: 500,
@@ -55,24 +55,19 @@ export const addPurchase = async (req, res) => {
     });
   }
 
-  try {
-    const purchaseInfo = {
-      purchase_id: req.body.purchase_id,
-      purchase_date: req.body.purchase_date,
-      product: req.body.product,
-      category_product: req.body.category_product,
-      amount: req.body.amount,
-    };
+  const purchaseInfo = {
+    purchase_id: req.body.purchases[0].purchase_id,
+    purchase_date: req.body.purchases[0].purchase_date,
+    product: req.body.purchases[0].product,
+    category_product: req.body.purchases[0].category_product,
+    amount: req.body.purchases[0].amount,
+  };
 
+  try {
     if (alreadyExist) {
-      await History.update(
-        { email },
-        {
-          $push: purchaseInfo,
-        }
-      );
+      await History.updateOne({ email }, { $push: { purchases: purchaseInfo, } });
     } else {
-      await History.create(purchaseInfo);
+      await History.create(req.body);
     }
 
     return res.json({

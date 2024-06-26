@@ -3,10 +3,11 @@ import Users from '../Models/Users.model.js';
 export const getUsers = async (req, res) => {
   try {
     const response = await Users.find({});
-
+    if (response) {
+    }
     return res.json({
       status: 200,
-      data: response,
+      data: response ? response : 'There are not users yet',
     });
   } catch (error) {
     return res.json({
@@ -40,7 +41,7 @@ export const getUser = async (req, res) => {
 
     return res.json({
       status: 200,
-      response,
+      response: response ? response : 'That user does not exist',
     });
   } catch (error) {
     return res.json({
@@ -75,7 +76,7 @@ export const editUser = async (req, res) => {
 };
 
 export const deleteUser = async (req, res) => {
-  const { email } = req.params;
+  const { email } = req.body;
 
   try {
     await Users.deleteOne({ email });

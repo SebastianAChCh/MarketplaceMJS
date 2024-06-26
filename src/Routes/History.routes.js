@@ -10,7 +10,7 @@ const router = Router();
 
 router.get('/getHistories', getHistories);
 
-router.get('/getHistory', getHistory);
+router.get('/getHistory/:email', getHistory);
 
 router.post('/addPurchase', addPurchase);
 
