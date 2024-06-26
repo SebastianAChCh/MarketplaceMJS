@@ -18,7 +18,6 @@ export const getHistories = async (req, res) => {
 const getHistoryMethod = async (email) => {
   try {
     const response = await History.find({ email });
-    console.log(response);
     return response;
   } catch (error) {
     throw new Error(error);
@@ -65,6 +64,19 @@ export const addPurchase = async (req, res) => {
 
   try {
     if (alreadyExist) {
+
+      const response = await History.find({ email });
+      const purchasesArr = Array(response[0].purchases);
+      const itExist = purchasesArr[0].some(purchase => purchase.purchase_id == req.body.purchases[0].purchase_id);
+      console.log(purchasesArr[0]);
+
+      if (itExist) {
+        return res.json({
+          status: 200,
+          message: 'The id of that purchase already exist',
+        });
+      }
+
       await History.updateOne({ email }, { $push: { purchases: purchaseInfo, } });
     } else {
       await History.create(req.body);
@@ -82,7 +94,7 @@ export const addPurchase = async (req, res) => {
   }
 };
 
-export const deletePurchase = async (req, res) => {
+export const deleteHistory = async (req, res) => {
   const { email } = req.body;
 
   try {

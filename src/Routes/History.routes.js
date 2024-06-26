@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import {
   addPurchase,
-  deletePurchase,
+  deleteHistory,
   getHistories,
   getHistory,
 } from '../Controllers/History.controller';
@@ -14,6 +14,6 @@ router.get('/getHistory/:email', getHistory);
 
 router.post('/addPurchase', addPurchase);
 
-router.delete('/deletePurchase', deletePurchase);
+router.delete('/deleteHistory', deleteHistory);
 
 export default router;
