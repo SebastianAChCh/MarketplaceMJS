@@ -68,7 +68,6 @@ export const addPurchase = async (req, res) => {
       const response = await History.find({ email });
       const purchasesArr = Array(response[0].purchases);
       const itExist = purchasesArr[0].some(purchase => purchase.purchase_id == req.body.purchases[0].purchase_id);
-      console.log(purchasesArr[0]);
 
       if (itExist) {
         return res.json({
